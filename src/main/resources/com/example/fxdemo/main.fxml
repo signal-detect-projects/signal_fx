@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="200.0"
+            nodeOrientation="LEFT_TO_RIGHT"
+            xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.fxdemo.controller.MainController">
+    <children>
+        <VBox fx:id="mainVbox" style="--fxbackground-color: #cb5050" AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox>
+                    <children>
+                        <MenuBar style="-fx-background-color: transparent;">
+                            <menus>
+                                <Menu mnemonicParsing="false" text="文件">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="打开"/>
+                                        <MenuItem mnemonicParsing="false" text="最近打开"/>
+                                        <MenuItem mnemonicParsing="false" text="退出"/>
+                                    </items>
+                                </Menu>
+                                <Menu mnemonicParsing="false" text="采集控制">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="采集设置"/>
+                                        <MenuItem mnemonicParsing="false" text="开始采集"/>
+                                        <MenuItem mnemonicParsing="false" text="停止采集"/>
+                                    </items>
+                                </Menu>
+                                <Menu mnemonicParsing="false" text="帮助">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="关于"/>
+                                    </items>
+                                </Menu>
+                            </menus>
+                        </MenuBar>
+                    </children>
+                </HBox>
+                <fx:include source="charts.fxml"/>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

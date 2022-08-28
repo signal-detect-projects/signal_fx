@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="echarts.min.js"></script>
+
+    <link rel="stylesheet" href="all.css">
+</head>
+<body>
+<!--第一行-->
+<div class="line1">
+    <!--    分类表格-->
+    <div id="cat_table">
+        <div class="chart_title">分类表格</div>
+    </div>
+    <!--    分时图-->
+    <div id="time_chart">
+        <div class="chart_title">趋势图</div>
+        <div id="time_echarts"></div>
+    </div>
+</div>
+<!--第二行-->
+<div class="line2">
+    <!--    柱状图-->
+    <div id="histo_chart">
+        <div class="chart_title">PRPD图谱</div>
+    </div>
+
+    <!--    热力图-->
+    <div id="hot_chart">
+        <div class="chart_title">PRPS热力图</div>
+    </div>
+    <!--    数据图-->
+    <div id="data_chart">
+        <div class="chart_title">数据图</div>
+    </div>
+</div>
+<script src="time_chart.js"></script>
+<script>
+    window.onresize = function () {
+        time_echarts.resize();
+    };
+</script>
+</body>
+</html>
