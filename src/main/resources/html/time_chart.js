@@ -1,25 +1,4 @@
 // 分时图相关
-// 对Date的扩展，将 Date 转化为指定格式的String
-// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
-// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
-// 例子：
-// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
-// (new Date()).Format("yyyy-M-d h:m:s.S")   ==> 2006-7-2 8:9:4.18
-Date.prototype.Format = function (fmt) { //author: meizz
-    var o = {
-        "M+": this.getMonth() + 1, //月份
-        "d+": this.getDate(), //日
-        "h+": this.getHours(), //小时
-        "m+": this.getMinutes(), //分
-        "s+": this.getSeconds(), //秒
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-        "S": this.getMilliseconds() //毫秒
-    };
-    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
-        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-    return fmt;
-}
 
 var time_echarts = echarts.init(document.getElementById('time_echarts'), null, {renderer: 'svg'});
 
@@ -47,16 +26,42 @@ option = {
             params = params[0];
             var date = new Date(params.name);
             return (
-                date.Format("hh:mm") +"   "+
+                date.Format("hh:mm") + "   " +
                 params.value[1]
             );
+        },
+    },
+    brush: {
+        xAxisIndex: "all",
+        brushLink: "all",
+        brushStyle: {
+            borderWidth: 2,
+            color: "rgba(255,255,255,0.1)",
+            borderColor: "#0A244C",
+            borderTop: 0,
+            borderBottom: 0,
+            borderCap: 'round',
+            borderDashOffset: 1,
+            borderType: [5, 3],
+            borderJoin: 'round'
         },
     },
     xAxis: {
         type: 'time',
         min: 'dataMin',
-        show:false
+        show: false
     },
+    axisPointer: {
+        link: {
+            xAxisIndex: "all", // 实现多个图的贯穿 X 轴提示线
+        },
+    },
+    dataZoom: [
+        {
+            type: 'inside',
+            xAxisIndex: "all",
+        },
+    ],
     yAxis: {
         type: 'value',
         boundaryGap: ['25%', '50%'],
@@ -73,7 +78,7 @@ option = {
             type: 'line',
             showSymbol: false,
             data: data
-        },{
+        }, {
             name: 'data2',
             type: 'line',
             showSymbol: false,
@@ -82,6 +87,33 @@ option = {
     ]
 };
 time_echarts.setOption(option);
+
+time_echarts.getZr().on('click', data => {
+    var list = [data.offsetX, data.offsetY]
+    var index = 0
+    console.log('点击', data)
+    // // 判断点击的坐标在不在坐标系内
+    // while (!myEchart.containPixel({gridIndex: index}, list) && index < 4) {
+    //     index++
+    // }
+    // // 如果 index > 3, 说明点击的是空白区域
+    // if (index > 3) return
+    // // 点击相同通道，不处理
+    // if (index === this.selectedSeriesIndex) return
+    // this.$emit("selectedComponent", index);
+    // this.selectedSeriesIndex = index
+})
+
+time_echarts.dispatchAction({
+    type: "brush",
+    areas: [
+        {
+            brushType: "lineX",
+            coordRange: coordRange,
+            gridIndex: 4,
+        },
+    ],
+});
 
 setInterval(function () {
     for (var i = 0; i < 5; i++) {
@@ -93,8 +125,8 @@ setInterval(function () {
         series: [
             {
                 data: data
-            },{
-            data:data2
+            }, {
+                data: data2
             }
         ]
     });
@@ -111,6 +143,7 @@ function randomData() {
         ]
     };
 }
+
 function randomData2() {
     start_time2 = new Date(+start_time2 + Math.random() * 1000 * 60);
     last_v2 = last_v2 + Math.random() * 100 - 47
