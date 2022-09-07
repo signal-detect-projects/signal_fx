@@ -20,6 +20,9 @@ option = {
     title: {
         text: '趋势图'
     },
+    toolbox: {
+        show: true,
+    },
     tooltip: {
         trigger: 'axis',
         formatter: function (params) {
@@ -34,16 +37,21 @@ option = {
     brush: {
         xAxisIndex: "all",
         brushLink: "all",
+        throttleType: "debounce", //开启选中延迟后调用回调延迟
+        throttleDelay: 600, //选中延迟后调用回调延迟时
         brushStyle: {
-            borderWidth: 2,
-            color: "rgba(255,255,255,0.1)",
-            borderColor: "#0A244C",
-            borderTop: 0,
-            borderBottom: 0,
-            borderCap: 'round',
-            borderDashOffset: 1,
-            borderType: [5, 3],
-            borderJoin: 'round'
+            // borderWidth: 2,
+            // color: "rgba(255,255,255,0.1)",
+            // borderColor: "#0A244C",
+            // borderTop: 0,
+            // borderBottom: 0,
+            // borderCap: 'round',
+            // borderDashOffset: 1,
+            // borderType: [5, 3],
+            // borderJoin: 'round'
+            borderWidth: 1,
+            color: 'rgba(120,140,180,0.3)',
+            borderColor: 'rgba(0,0,0,.65)'
         },
     },
     xAxis: {
@@ -51,17 +59,17 @@ option = {
         min: 'dataMin',
         show: false
     },
-    axisPointer: {
-        link: {
-            xAxisIndex: "all", // 实现多个图的贯穿 X 轴提示线
-        },
-    },
-    dataZoom: [
-        {
-            type: 'inside',
-            xAxisIndex: "all",
-        },
-    ],
+    // axisPointer: {
+    //     link: {
+    //         xAxisIndex: "all", // 实现多个图的贯穿 X 轴提示线
+    //     },
+    // },
+    // dataZoom: [
+    //     {
+    //         type: 'inside',
+    //         xAxisIndex: "all",
+    //     },
+    // ],
     yAxis: {
         type: 'value',
         boundaryGap: ['25%', '50%'],
@@ -103,17 +111,37 @@ time_echarts.getZr().on('click', data => {
     // this.$emit("selectedComponent", index);
     // this.selectedSeriesIndex = index
 })
+coordRange = [100, 200]
+// time_echarts.dispatchAction({
+//     type: "brush",
+//     areas: [
+//         {
+//             brushType: "lineX",
+//             coordRange: coordRange,
+//             gridIndex: 0,
+//         },
+//     ],
+// });
+
 
 time_echarts.dispatchAction({
-    type: "brush",
-    areas: [
-        {
-            brushType: "lineX",
-            coordRange: coordRange,
-            gridIndex: 4,
-        },
-    ],
+    type: 'takeGlobalCursor',
+    // 如果想变为“可刷选状态”，必须设置。不设置则会关闭“可刷选状态”。
+    key: 'brush',
+    brushOption: {
+        // 参见 brush 组件的 brushType。如果设置为 false 则关闭“可刷选状态”。
+        brushType: 'lineX',
+        // 参见 brush 组件的 brushMode。如果不设置，则取 brush 组件的 brushMode 设置
+        brushMode: 'single'
+    }
 });
+
+function renderBrushed(params) {
+    console.log('renderBrushed', params)
+}
+
+time_echarts.on('brushEnd', renderBrushed); //圈选结束后的回调
+
 
 setInterval(function () {
     for (var i = 0; i < 5; i++) {
