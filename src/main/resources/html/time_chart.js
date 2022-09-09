@@ -1,6 +1,6 @@
 // 分时图相关
 
-var time_echarts = echarts.init(document.getElementById('time_echarts'), null, {renderer: 'svg'});
+var time_echarts = echarts.init(document.getElementById('time_echarts'), null, {renderer: 'canvas'});
 
 
 var data = [];
@@ -17,7 +17,7 @@ for (var i = 0; i < 1000; i++) {
     data2.push(randomData2())
 }
 var selected_channel_index = 0;
-option = {
+time_chart_option = {
     animation: true,
     title: {
         text: '趋势图'
@@ -191,7 +191,7 @@ option = {
     ]
 }
 ;
-time_echarts.setOption(option);
+time_echarts.setOption(time_chart_option);
 // 点击通道
 time_echarts.getZr().on('click', param => {
     console.log("进入click")

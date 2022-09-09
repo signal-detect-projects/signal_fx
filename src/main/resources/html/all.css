@@ -34,22 +34,22 @@
     height: 47vh;
 }
 
-#histo_chart {
+#bar_chart {
     float: left;
-    width: 33%;
+    width: 35%;
     height: 100%;
-    background-color: aquamarine;
+    /*background-color: aquamarine;*/
 }
 
 #hot_chart {
     float: left;
-    width: 33%;
+    width: 35%;
     height: 100%;
-    background-color: cadetblue;
+    /*background-color: cadetblue;*/
 }
 
 #data_chart {
     float: left;
-    width: 34%;
+    width: 30%;
     height: 100%;
 }

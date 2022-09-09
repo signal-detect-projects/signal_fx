@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="echarts.min.js"></script>
+    <script src="https://fastly.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
+    <script src="https://fastly.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
     <script src="./common.js"></script>
     <link rel="stylesheet" href="all.css">
 </head>
@@ -23,13 +24,11 @@
 <!--第二行-->
 <div class="line2">
     <!--    柱状图-->
-    <div id="histo_chart">
-        <div class="chart_title">PRPD图谱</div>
+    <div id="bar_chart">
     </div>
 
     <!--    热力图-->
     <div id="hot_chart">
-        <div class="chart_title">PRPS热力图</div>
     </div>
     <!--    数据图-->
     <div id="data_chart">
@@ -37,10 +36,12 @@
     </div>
 </div>
 <script src="time_chart.js"></script>
+<script src="bar_chart.js"></script>
+<script src="hot_chart.js"></script>
 <script>
-    window.onresize = function () {
-        time_echarts.resize();
-    };
+    // window.onresize = function () {
+    //     time_echarts.resize();
+    // };
 </script>
 </body>
 </html>
